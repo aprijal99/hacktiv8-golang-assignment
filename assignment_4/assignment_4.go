@@ -10,7 +10,7 @@ func main() {
 	studentNumber, err := strconv.Atoi(os.Args[1])
 
 	if err != nil {
-		fmt.Println("Oh no, there is something error. The input number must be a number")
+		fmt.Println("Oh no, there is something error. The input must be a number")
 		return
 	}
 
