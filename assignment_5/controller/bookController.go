@@ -123,3 +123,7 @@ func UpdateBookById(ctx *gin.Context) {
 		"message": fmt.Sprintf("Success updating the book with id = %d", id),
 	})
 }
+
+func DeleteBookById(ctx *gin.Context) {
+
+}
