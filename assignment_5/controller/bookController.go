@@ -125,5 +125,44 @@ func UpdateBookById(ctx *gin.Context) {
 }
 
 func DeleteBookById(ctx *gin.Context) {
+	id, err := strconv.Atoi(ctx.Param("id"))
 
+	if err != nil {
+		fmt.Println(err)
+		ctx.AbortWithStatusJSON(http.StatusBadRequest, gin.H{
+			"code":    http.StatusBadRequest,
+			"status":  "Bad Request",
+			"message": "The id must be a number",
+		})
+		return
+	}
+
+	isFound := false
+	var bookIdx int
+
+	for idx, book := range Books {
+		if book.Id == id {
+			bookIdx = idx
+			isFound = true
+		}
+	}
+
+	if !isFound {
+		ctx.AbortWithStatusJSON(http.StatusNotFound, gin.H{
+			"code":    http.StatusNotFound,
+			"status":  "Not Found",
+			"message": fmt.Sprintf("The book with id = %d is not found in the database", id),
+		})
+		return
+	}
+
+	copy(Books[bookIdx:], Books[bookIdx+1:])
+	Books[len(Books)-1] = entity.Book{}
+	Books = Books[:len(Books)-1]
+
+	ctx.JSON(http.StatusOK, gin.H{
+		"code":    http.StatusOK,
+		"status":  "Created",
+		"message": fmt.Sprintf("Success deleting the book with id = %d", id),
+	})
 }
