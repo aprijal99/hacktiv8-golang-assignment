@@ -12,11 +12,6 @@ import (
 	"gorm.io/gorm"
 )
 
-var Books = []entity.Book{
-	{Id: 1, Title: "Calculus 1", Author: "John F Bach", Desc: "Calculus 1 covers mostly about Derivatives"},
-	{Id: 2, Title: "Introduction of Biochemistry", Author: "Lehninger", Desc: "This is introduction to biomolecules"},
-}
-
 func GetAllBooks(ctx *gin.Context) {
 	db := database.GetDB()
 	var books []entity.Book
@@ -83,8 +78,11 @@ func CreateNewBook(ctx *gin.Context) {
 }
 
 func UpdateBookById(ctx *gin.Context) {
-	id, err := strconv.Atoi(ctx.Param("id"))
+	db := database.GetDB()
+	var oldBook entity.Book
+	var updatedBook entity.Book
 
+	id, err := strconv.Atoi(ctx.Param("id"))
 	if err != nil {
 		fmt.Println(err)
 		ctx.AbortWithStatusJSON(http.StatusBadRequest, gin.H{
@@ -94,9 +92,6 @@ func UpdateBookById(ctx *gin.Context) {
 		})
 		return
 	}
-
-	isFound := false
-	var updatedBook entity.Book
 
 	if err := ctx.ShouldBindJSON(&updatedBook); err != nil {
 		ctx.AbortWithStatusJSON(http.StatusBadRequest, gin.H{
@@ -107,32 +102,24 @@ func UpdateBookById(ctx *gin.Context) {
 		return
 	}
 
-	for idx, book := range Books {
-		if book.Id == id {
-			Books[idx] = updatedBook
-			isFound = true
-		}
-	}
-
-	if !isFound {
-		ctx.AbortWithStatusJSON(http.StatusNotFound, gin.H{
-			"code":    http.StatusNotFound,
-			"status":  "Not Found",
-			"message": fmt.Sprintf("The book with id = %d is not found in the database", id),
+	errUpdate := db.Model(&oldBook).Where("id = ?", id).Updates(&updatedBook).Error
+	if errUpdate != nil {
+		ctx.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{
+			"code":    http.StatusInternalServerError,
+			"status":  "Internal Server Error",
+			"message": "Error updating the book record, there is something error with the server",
 		})
 		return
 	}
 
-	ctx.JSON(http.StatusOK, gin.H{
-		"code":    http.StatusOK,
-		"status":  "Created",
-		"message": fmt.Sprintf("Success updating the book with id = %d", id),
-	})
+	ctx.JSON(http.StatusOK, updatedBook)
 }
 
 func DeleteBookById(ctx *gin.Context) {
-	id, err := strconv.Atoi(ctx.Param("id"))
+	db := database.GetDB()
+	var book entity.Book
 
+	id, err := strconv.Atoi(ctx.Param("id"))
 	if err != nil {
 		fmt.Println(err)
 		ctx.AbortWithStatusJSON(http.StatusBadRequest, gin.H{
@@ -143,17 +130,8 @@ func DeleteBookById(ctx *gin.Context) {
 		return
 	}
 
-	isFound := false
-	var bookIdx int
-
-	for idx, book := range Books {
-		if book.Id == id {
-			bookIdx = idx
-			isFound = true
-		}
-	}
-
-	if !isFound {
+	errDelete := db.Where("id = ?", id).Delete(&book).Error
+	if errDelete != nil {
 		ctx.AbortWithStatusJSON(http.StatusNotFound, gin.H{
 			"code":    http.StatusNotFound,
 			"status":  "Not Found",
@@ -162,13 +140,7 @@ func DeleteBookById(ctx *gin.Context) {
 		return
 	}
 
-	copy(Books[bookIdx:], Books[bookIdx+1:])
-	Books[len(Books)-1] = entity.Book{}
-	Books = Books[:len(Books)-1]
-
 	ctx.JSON(http.StatusOK, gin.H{
-		"code":    http.StatusOK,
-		"status":  "Created",
-		"message": fmt.Sprintf("Success deleting the book with id = %d", id),
+		"message": "Book deleted successfully",
 	})
 }
