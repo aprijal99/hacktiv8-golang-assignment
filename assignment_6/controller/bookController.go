@@ -70,7 +70,27 @@ func CreateNewBook(ctx *gin.Context) {
 }
 
 func UpdateBook(ctx *gin.Context) {
+	db := database.GetDB()
+	var updatedBook entity.Book
 
+	id, err := strconv.Atoi(ctx.Param("id"))
+	if err != nil {
+		panic(err)
+	}
+
+	errBind := ctx.ShouldBindJSON(&updatedBook)
+	if errBind != nil {
+		panic(err)
+	}
+
+	res, errUpdate := db.Exec("update books set title=$2, author=$3, desc=$4 where id=$1", id, &updatedBook.Title, &updatedBook.Author, &updatedBook.Desc)
+	if errUpdate != nil {
+		panic(errUpdate)
+	}
+
+	fmt.Printf("Updated %d row(s)", res)
+
+	ctx.JSON(http.StatusOK, "Updated")
 }
 
 func DeleteBook(ctx *gin.Context) {
