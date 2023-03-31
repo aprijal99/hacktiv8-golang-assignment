@@ -61,7 +61,7 @@ func CreateNewBook(ctx *gin.Context) {
 		panic(err)
 	}
 
-	errInsert := db.QueryRow("insert into books (title, author, desc) values ($1, $2, $3)", &newBook.Title, &newBook.Author, &newBook.Desc)
+	errInsert := db.QueryRow("insert into books (title, author, description) values ($1, $2, $3)", &newBook.Title, &newBook.Author, &newBook.Desc)
 	if errInsert != nil {
 		panic(err)
 	}
@@ -83,7 +83,7 @@ func UpdateBook(ctx *gin.Context) {
 		panic(err)
 	}
 
-	res, errUpdate := db.Exec("update books set title=$2, author=$3, desc=$4 where id=$1", id, &updatedBook.Title, &updatedBook.Author, &updatedBook.Desc)
+	res, errUpdate := db.Exec("update books set title=$2, author=$3, description=$4 where id=$1", id, &updatedBook.Title, &updatedBook.Author, &updatedBook.Desc)
 	if errUpdate != nil {
 		panic(errUpdate)
 	}

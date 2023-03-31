@@ -12,7 +12,7 @@ const (
 	port     = 5432
 	user     = "postgres"
 	password = "subang12345"
-	dbname   = "book-service"
+	dbname   = "bookservice"
 )
 
 var (
@@ -27,12 +27,14 @@ func StartDB() {
 	if err != nil {
 		panic(err)
 	}
-	defer db.Close()
+	// defer db.Close()
 
 	err = db.Ping()
 	if err != nil {
 		panic(err)
 	}
+
+	fmt.Println("Successfully connected to database")
 }
 
 func GetDB() *sql.DB {
