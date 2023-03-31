@@ -61,10 +61,7 @@ func CreateNewBook(ctx *gin.Context) {
 		panic(err)
 	}
 
-	errInsert := db.QueryRow("insert into books (title, author, description) values ($1, $2, $3)", &newBook.Title, &newBook.Author, &newBook.Desc)
-	if errInsert != nil {
-		panic(err)
-	}
+	db.QueryRow("insert into books (title, author, description) values ($1, $2, $3)", &newBook.Title, &newBook.Author, &newBook.Desc)
 
 	ctx.JSON(http.StatusCreated, "Created")
 }
