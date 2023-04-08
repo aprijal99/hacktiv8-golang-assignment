@@ -25,8 +25,8 @@ func ResponseSuccessWithData(code int, data map[string]interface{}) map[string]i
 
 func ResponseError(code int) map[string]interface{} {
 	status := map[string]interface{}{
-		"code":   code,
-		"status": http.StatusText(code),
+		"code":  code,
+		"error": http.StatusText(code),
 	}
 
 	return status

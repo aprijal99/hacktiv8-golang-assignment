@@ -10,7 +10,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func CreateProduct(ctx *gin.Context) {
+func CreateNewTodo(ctx *gin.Context) {
 	db := database.GetDB()
 	userData := ctx.MustGet("userData").(jwt.MapClaims)
 	userId := uint(userData["id"].(float64))

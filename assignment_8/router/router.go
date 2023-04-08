@@ -19,7 +19,7 @@ func StartServer() *gin.Engine {
 	todoRouter := router.Group("/todos")
 	{
 		todoRouter.Use(middleware.AuthorizeRequest())
-		todoRouter.POST("/", controller.CreateProduct)
+		todoRouter.POST("/", controller.CreateNewTodo)
 	}
 
 	return router
