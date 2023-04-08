@@ -5,6 +5,7 @@ import (
 	"product/database"
 	"product/entity"
 	"product/helper"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 )
@@ -15,8 +16,8 @@ func GetProductsOwnedByUserId(ctx *gin.Context) {
 	status := http.StatusFound
 	products := []entity.Product{}
 
-	err := db.Where("user_id = ?", userId).Find(&products).Error
-	if err != nil {
+	errFind := db.Where("user_id = ?", userId).Find(&products).Error
+	if errFind != nil {
 		status = http.StatusNotFound
 		ctx.AbortWithStatusJSON(status, helper.ResponseError(status))
 		return
@@ -26,7 +27,25 @@ func GetProductsOwnedByUserId(ctx *gin.Context) {
 }
 
 func GetProductById(ctx *gin.Context) {
+	db := database.GetDB()
+	status := http.StatusFound
+	product := entity.Product{}
 
+	id, errId := strconv.Atoi(ctx.Param("id"))
+	if errId != nil {
+		status = http.StatusBadRequest
+		ctx.AbortWithStatusJSON(status, helper.ResponseError(status))
+		return
+	}
+
+	errFind := db.First(&product, "id = ?", id).Error
+	if errFind != nil {
+		status = http.StatusNotFound
+		ctx.AbortWithStatusJSON(status, helper.ResponseError(status))
+		return
+	}
+
+	ctx.JSON(status, helper.ResponseSuccessWithData(status, product))
 }
 
 func CreateNewProduct(ctx *gin.Context) {
