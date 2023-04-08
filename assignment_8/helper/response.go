@@ -1,4 +1,4 @@
-package entity
+package helper
 
 import (
 	"net/http"

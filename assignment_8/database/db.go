@@ -26,7 +26,7 @@ func StartDB() {
 		panic(err)
 	}
 
-	db.Debug().AutoMigrate(entity.User{}, entity.Todo{})
+	db.AutoMigrate(entity.User{}, entity.Todo{})
 }
 
 func GetDB() *gorm.DB {

@@ -17,18 +17,18 @@ func UserSignup(ctx *gin.Context) {
 	errBind := ctx.ShouldBindJSON(&newUser)
 	if errBind != nil {
 		status = http.StatusBadRequest
-		ctx.AbortWithStatusJSON(status, entity.ResponseError(status))
+		ctx.AbortWithStatusJSON(status, helper.ResponseError(status))
 		return
 	}
 
 	errCreate := db.Create(&newUser).Error
 	if errCreate != nil {
 		status = http.StatusInternalServerError
-		ctx.AbortWithStatusJSON(status, entity.ResponseError(status))
+		ctx.AbortWithStatusJSON(status, helper.ResponseError(status))
 		return
 	}
 
-	ctx.JSON(status, entity.ResponseSuccessNoData(status))
+	ctx.JSON(status, helper.ResponseSuccessNoData(status))
 }
 
 func UserLogin(ctx *gin.Context) {
@@ -39,7 +39,7 @@ func UserLogin(ctx *gin.Context) {
 	errBind := ctx.ShouldBindJSON(&user)
 	if errBind != nil {
 		status = http.StatusBadRequest
-		ctx.AbortWithStatusJSON(status, entity.ResponseError(status))
+		ctx.AbortWithStatusJSON(status, helper.ResponseError(status))
 		return
 	}
 
@@ -48,14 +48,14 @@ func UserLogin(ctx *gin.Context) {
 	errFind := db.Where("email = ?", user.Email).Take(&user).Error
 	if errFind != nil {
 		status = http.StatusNotFound
-		ctx.AbortWithStatusJSON(status, entity.ResponseError(status))
+		ctx.AbortWithStatusJSON(status, helper.ResponseError(status))
 		return
 	}
 
 	isPasswordValid := helper.ComparePassword([]byte(user.Password), []byte(password))
 	if !isPasswordValid {
 		status = http.StatusForbidden
-		ctx.AbortWithStatusJSON(status, entity.ResponseError(status))
+		ctx.AbortWithStatusJSON(status, helper.ResponseError(status))
 		return
 	}
 
@@ -63,5 +63,5 @@ func UserLogin(ctx *gin.Context) {
 		"access_token": helper.GenerateToken(user.Id, user.Email),
 	}
 
-	ctx.JSON(status, entity.ResponseSuccessWithData(status, accessToken))
+	ctx.JSON(status, helper.ResponseSuccessWithData(status, accessToken))
 }
