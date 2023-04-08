@@ -2,7 +2,7 @@ package database
 
 import (
 	"fmt"
-	"todolist/entity"
+	"product/entity"
 
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
@@ -26,7 +26,7 @@ func StartDB() {
 		panic(err)
 	}
 
-	db.AutoMigrate(entity.User{}, entity.Todo{})
+	db.AutoMigrate(entity.User{}, entity.Product{})
 }
 
 func GetDB() *gorm.DB {

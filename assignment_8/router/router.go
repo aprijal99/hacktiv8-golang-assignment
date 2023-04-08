@@ -1,8 +1,8 @@
 package router
 
 import (
-	"todolist/controller"
-	"todolist/middleware"
+	"product/controller"
+	"product/middleware"
 
 	"github.com/gin-gonic/gin"
 )
@@ -16,10 +16,11 @@ func StartServer() *gin.Engine {
 		userRouter.POST("/login", controller.UserLogin)
 	}
 
-	todoRouter := router.Group("/todos")
+	productRouter := router.Group("/products")
 	{
-		todoRouter.Use(middleware.AuthorizeRequest())
-		todoRouter.POST("/", controller.CreateNewTodo)
+		productRouter.Use(middleware.AuthorizeRequest())
+		productRouter.GET("/", controller.GetProductsOwnedByUserId)
+		productRouter.POST("/", controller.CreateNewProduct)
 	}
 
 	return router

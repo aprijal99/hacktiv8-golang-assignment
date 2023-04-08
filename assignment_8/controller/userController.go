@@ -2,9 +2,9 @@ package controller
 
 import (
 	"net/http"
-	"todolist/database"
-	"todolist/entity"
-	"todolist/helper"
+	"product/database"
+	"product/entity"
+	"product/helper"
 
 	"github.com/gin-gonic/gin"
 )

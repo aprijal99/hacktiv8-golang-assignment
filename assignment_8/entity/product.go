@@ -2,7 +2,7 @@ package entity
 
 import "time"
 
-type Todo struct {
+type Product struct {
 	Id          uint   `json:"id" gorm:"primaryKey"`
 	Title       string `json:"title" gorm:"not null;type:varchar(255)"`
 	Description string `json:"description" gorm:"not null;type:varchar(255)"`

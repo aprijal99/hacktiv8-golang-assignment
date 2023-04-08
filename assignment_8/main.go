@@ -1,8 +1,8 @@
 package main
 
 import (
-	"todolist/database"
-	"todolist/router"
+	"product/database"
+	"product/router"
 )
 
 func main() {

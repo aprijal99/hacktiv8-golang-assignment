@@ -2,7 +2,7 @@ package middleware
 
 import (
 	"net/http"
-	"todolist/helper"
+	"product/helper"
 
 	"github.com/gin-gonic/gin"
 )
@@ -13,6 +13,7 @@ func AuthorizeRequest() gin.HandlerFunc {
 		if err != nil {
 			status := http.StatusUnauthorized
 			ctx.AbortWithStatusJSON(status, helper.ResponseError(status))
+			return
 		}
 
 		ctx.Set("userData", userData)

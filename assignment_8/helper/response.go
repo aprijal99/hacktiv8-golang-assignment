@@ -13,7 +13,7 @@ func ResponseSuccessNoData(code int) map[string]interface{} {
 	return status
 }
 
-func ResponseSuccessWithData(code int, data map[string]interface{}) map[string]interface{} {
+func ResponseSuccessWithData(code int, data interface{}) map[string]interface{} {
 	status := map[string]interface{}{
 		"code":   code,
 		"status": http.StatusText(code),

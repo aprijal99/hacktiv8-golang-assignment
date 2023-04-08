@@ -1,8 +1,8 @@
 package entity
 
 import (
+	"product/helper"
 	"time"
-	"todolist/helper"
 
 	"gorm.io/gorm"
 )
@@ -12,7 +12,7 @@ type User struct {
 	Name      string    `json:"name" gorm:"not null;type:varchar(255)"`
 	Email     string    `json:"email" gorm:"not null;unique;type:varchar(50)"`
 	Password  string    `json:"password" gorm:"not null;type:varchar(255)"`
-	Todos     []Todo    `json:"todos" gorm:"constraint:OnUpdate:CASCADE,OnDelete:SET NULL;"`
+	Products  []Product `json:"products" gorm:"constraint:OnUpdate:CASCADE,OnDelete:SET NULL;"`
 	CreatedAt time.Time `json:"created_at"`
 	UpdatedAt time.Time `json:"updated_at"`
 }

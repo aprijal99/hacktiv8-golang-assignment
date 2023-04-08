@@ -46,3 +46,10 @@ func VerifyToken(ctx *gin.Context) (interface{}, error) {
 
 	return parsedToken.Claims.(jwt.MapClaims), nil
 }
+
+func GetUserIdFromClaims(ctx *gin.Context) uint {
+	userData := ctx.MustGet("userData").(jwt.MapClaims)
+	userId := uint(userData["id"].(float64))
+
+	return userId
+}
