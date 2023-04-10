@@ -37,14 +37,14 @@ func TestProductServiceGetAllProductsFound(t *testing.T) {
 		{Id: 2, Name: "Computer"},
 	}
 
-	productRepository.Mock.On("FindAll").Return(products)
+	productRepository.Mock.On("FindAll").Return(products).Once()
 	result := productService.GetAllProducts()
 
 	assert.Equal(t, &products, result)
 }
 
 func TestProductServiceGetAllProductsNotFound(t *testing.T) {
-	productRepository.Mock.On("FindAll").Return(nil)
+	productRepository.Mock.On("FindAll").Return(nil).Once()
 	result := productService.GetAllProducts()
 
 	assert.Nil(t, result)
