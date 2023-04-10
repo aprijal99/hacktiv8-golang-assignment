@@ -1,0 +1,51 @@
+package service
+
+import (
+	"test/entity"
+	"test/repository"
+	"testing"
+
+	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/mock"
+)
+
+var productRepository = &repository.ProductRepositoryMock{Mock: mock.Mock{}}
+var productService = ProductService{Repository: productRepository}
+
+func TestProductServiceGetOneProductFound(t *testing.T) {
+	product := entity.Product{
+		Id:   2,
+		Name: "Computer",
+	}
+
+	productRepository.Mock.On("FindById", 2).Return(product)
+	result := productService.GetOneProduct(2)
+
+	assert.Equal(t, &product, result)
+}
+
+func TestProductServiceGetOneProductNotFound(t *testing.T) {
+	productRepository.Mock.On("FindById", 1).Return(nil)
+	result := productService.GetOneProduct(1)
+
+	assert.Nil(t, result)
+}
+
+func TestProductServiceGetAllProductsFound(t *testing.T) {
+	products := []entity.Product{
+		{Id: 1, Name: "Flash Disk"},
+		{Id: 2, Name: "Computer"},
+	}
+
+	productRepository.Mock.On("FindAll").Return(products)
+	result := productService.GetAllProducts()
+
+	assert.Equal(t, &products, result)
+}
+
+func TestProductServiceGetAllProductsNotFound(t *testing.T) {
+	productRepository.Mock.On("FindAll").Return(nil)
+	result := productService.GetAllProducts()
+
+	assert.Nil(t, result)
+}
