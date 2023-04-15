@@ -9,6 +9,14 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// UserSignup godoc
+// @Summary User signup
+// @Description User signup for new user
+// @Tags users
+// @Accept json
+// @Produce json
+// @Success 201 {object} entity.User
+// @Router /users/signup [post]
 func UserSignup(ctx *gin.Context) {
 	db := db.GetDB()
 	status := http.StatusCreated
@@ -30,6 +38,14 @@ func UserSignup(ctx *gin.Context) {
 	ctx.JSON(status, helper.ResponseSuccessNoData(status))
 }
 
+// UserLogin godoc
+// @Summary User login
+// @Description User login and get access token
+// @Tags users
+// @Accept json
+// @Produce json
+// @Success 302 {object} entity.User
+// @Router /users/login [post]
 func UserLogin(ctx *gin.Context) {
 	db := db.GetDB()
 	status := http.StatusFound

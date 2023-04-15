@@ -7,6 +7,7 @@ import (
 	"gorm.io/gorm"
 )
 
+// Photo represents the entity for a photo
 type Photo struct {
 	Id        uint      `json:"id" gorm:"primaryKey"`
 	Title     string    `json:"title" gorm:"not null;varchar(255)" valid:"required~Title can not be empty"`

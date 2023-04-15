@@ -7,6 +7,7 @@ import (
 	"gorm.io/gorm"
 )
 
+// SocialMedia represents the entity for a social media
 type SocialMedia struct {
 	Id             uint      `json:"id" gorm:"primaryKey"`
 	Name           string    `json:"name" gorm:"not null;varchar(20)" valid:"required~Name can not be empty"`

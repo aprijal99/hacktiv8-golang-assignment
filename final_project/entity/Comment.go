@@ -7,6 +7,7 @@ import (
 	"gorm.io/gorm"
 )
 
+// Comment represents the entity for a comment
 type Comment struct {
 	Id        uint      `json:"id" gorm:"primaryKey"`
 	UserId    uint      `json:"user_id"`

@@ -8,6 +8,7 @@ import (
 	"gorm.io/gorm"
 )
 
+// User represents the entity for a user
 type User struct {
 	Id          uint          `json:"id" gorm:"primaryKey"`
 	Username    string        `json:"username" gorm:"not null;type:varchar(20);uniqueIndex" form:"username" valid:"required~Username can not be empty"`

@@ -9,6 +9,14 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// GetAllPhotos godoc
+// @Summary Get details
+// @Description Get details of all photos
+// @Tags photos
+// @Accept json
+// @Produce json
+// @Success 302 {object} entity.Photo
+// @Router /photos [get]
 func GetAllPhotos(ctx *gin.Context) {
 	db := db.GetDB()
 	status := http.StatusFound
@@ -23,6 +31,15 @@ func GetAllPhotos(ctx *gin.Context) {
 	ctx.JSON(status, helper.ResponseSuccessWithData(status, photos))
 }
 
+// GetOnePhoto godoc
+// @Summary Get details for a given Id
+// @Description Get details of photo corresponding to the input Id
+// @Tags photos
+// @Accept json
+// @Produce json
+// @Param id path int true "Id of the photo"
+// @Success 302 {object} entity.Photo
+// @Router /photos/{id} [get]
 func GetOnePhoto(ctx *gin.Context) {
 	db := db.GetDB()
 	status := http.StatusFound
@@ -38,6 +55,15 @@ func GetOnePhoto(ctx *gin.Context) {
 	ctx.JSON(status, helper.ResponseSuccessWithData(status, photo))
 }
 
+// CreatePhoto godoc
+// @Summary Post details
+// @Description Post details of a new photo
+// @Tags photos
+// @Accept json
+// @Produce json
+// @Param entity.Photo body entity.Photo true "Photo details"
+// @Success 201 {object} entity.Photo
+// @Router /photos [post]
 func CreatePhoto(ctx *gin.Context) {
 	db := db.GetDB()
 	status := http.StatusCreated
@@ -62,6 +88,15 @@ func CreatePhoto(ctx *gin.Context) {
 	ctx.JSON(status, helper.ResponseSuccessNoData(status))
 }
 
+// UpdatePhoto godoc
+// @Summary Update photo identified by the given Id
+// @Description Update the photo corresponding to the input Id
+// @Tags photos
+// @Accept json
+// @Produce json
+// @Param id path int true "Id of the photo"
+// @Success 200 {object} entity.Photo
+// @Router /photos/{id} [put]
 func UpdatePhoto(ctx *gin.Context) {
 	db := db.GetDB()
 	status := http.StatusOK
@@ -87,6 +122,15 @@ func UpdatePhoto(ctx *gin.Context) {
 	ctx.JSON(status, helper.ResponseSuccessNoData(status))
 }
 
+// DeletePhoto godoc
+// @Summary Delete photo identified by the given Id
+// @Description Delete the photo corresponding to the input Id
+// @Tags photos
+// @Accept json
+// @Produce json
+// @Param id path int true "Id of the photo"
+// @Success 200 {object} entity.Photo
+// @Router /photos/{id} [delete]
 func DeletePhoto(ctx *gin.Context) {
 	db := db.GetDB()
 	status := http.StatusOK

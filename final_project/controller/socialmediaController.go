@@ -9,6 +9,14 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// GetAllSocialMedia godoc
+// @Summary Get details
+// @Description Get details of all social media
+// @Tags social_media
+// @Accept json
+// @Produce json
+// @Success 302 {object} entity.SocialMedia
+// @Router /socialmedia [get]
 func GetAllSocialMedia(ctx *gin.Context) {
 	db := db.GetDB()
 	status := http.StatusFound
@@ -23,6 +31,15 @@ func GetAllSocialMedia(ctx *gin.Context) {
 	ctx.JSON(status, helper.ResponseSuccessWithData(status, socialMedia))
 }
 
+// GetOneSocialMedia godoc
+// @Summary Get details for a given Id
+// @Description Get details of social media corresponding to the input Id
+// @Tags social_media
+// @Accept json
+// @Produce json
+// @Param id path int true "Id of the social media"
+// @Success 302 {object} entity.SocialMedia
+// @Router /socialmedia/{id} [get]
 func GetOneSocialMedia(ctx *gin.Context) {
 	db := db.GetDB()
 	status := http.StatusFound
@@ -38,6 +55,15 @@ func GetOneSocialMedia(ctx *gin.Context) {
 	ctx.JSON(status, helper.ResponseSuccessWithData(status, socialMedia))
 }
 
+// CreateSocialMedia godoc
+// @Summary Post details
+// @Description Post details of a new social media
+// @Tags social_media
+// @Accept json
+// @Produce json
+// @Param entity.SocialMedia body entity.SocialMedia true "Social media details"
+// @Success 201 {object} entity.SocialMedia
+// @Router /socialmedia [post]
 func CreateSocialMedia(ctx *gin.Context) {
 	db := db.GetDB()
 	status := http.StatusCreated
@@ -62,6 +88,15 @@ func CreateSocialMedia(ctx *gin.Context) {
 	ctx.JSON(status, helper.ResponseSuccessNoData(status))
 }
 
+// UpdateSocialMedia godoc
+// @Summary Update social media identified by the given Id
+// @Description Update the social media corresponding to the input Id
+// @Tags social_media
+// @Accept json
+// @Produce json
+// @Param id path int true "Id of the social media"
+// @Success 200 {object} entity.SocialMedia
+// @Router /socialmedia/{id} [put]
 func UpdateSocialMedia(ctx *gin.Context) {
 	db := db.GetDB()
 	status := http.StatusOK
@@ -87,6 +122,15 @@ func UpdateSocialMedia(ctx *gin.Context) {
 	ctx.JSON(status, helper.ResponseSuccessNoData(status))
 }
 
+// DeleteSocialMedia godoc
+// @Summary Delete social media identified by the given Id
+// @Description Delete the social media corresponding to the input Id
+// @Tags social_media
+// @Accept json
+// @Produce json
+// @Param id path int true "Id of the social media"
+// @Success 200 {object} entity.SocialMedia
+// @Router /socialmedia/{id} [delete]
 func DeleteSocialMedia(ctx *gin.Context) {
 	db := db.GetDB()
 	status := http.StatusOK

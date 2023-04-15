@@ -9,6 +9,14 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// GetAllComments godoc
+// @Summary Get details
+// @Description Get details of all comments
+// @Tags comments
+// @Accept json
+// @Produce json
+// @Success 302 {object} entity.Comment
+// @Router /comments [get]
 func GetAllComments(ctx *gin.Context) {
 	db := db.GetDB()
 	status := http.StatusFound
@@ -23,6 +31,15 @@ func GetAllComments(ctx *gin.Context) {
 	ctx.JSON(status, helper.ResponseSuccessWithData(status, comments))
 }
 
+// GetOneComment godoc
+// @Summary Get details for a given Id
+// @Description Get details of comment corresponding to the input Id
+// @Tags comments
+// @Accept json
+// @Produce json
+// @Param id path int true "Id of the comment"
+// @Success 302 {object} entity.Comment
+// @Router /comments/{id} [get]
 func GetOneComment(ctx *gin.Context) {
 	db := db.GetDB()
 	status := http.StatusFound
@@ -38,6 +55,15 @@ func GetOneComment(ctx *gin.Context) {
 	ctx.JSON(status, helper.ResponseSuccessWithData(status, comment))
 }
 
+// CreateComment godoc
+// @Summary Post details
+// @Description Post details of a new comment
+// @Tags comments
+// @Accept json
+// @Produce json
+// @Param entity.Comment body entity.Comment true "Comment details"
+// @Success 201 {object} entity.Comment
+// @Router /comments [post]
 func CreateComment(ctx *gin.Context) {
 	db := db.GetDB()
 	status := http.StatusCreated
@@ -62,6 +88,15 @@ func CreateComment(ctx *gin.Context) {
 	ctx.JSON(status, helper.ResponseSuccessNoData(status))
 }
 
+// UpdateComment godoc
+// @Summary Update comment identified by the given Id
+// @Description Update the comment corresponding to the input Id
+// @Tags comments
+// @Accept json
+// @Produce json
+// @Param id path int true "Id of the comment"
+// @Success 200 {object} entity.Comment
+// @Router /comments/{id} [put]
 func UpdateComment(ctx *gin.Context) {
 	db := db.GetDB()
 	status := http.StatusOK
@@ -87,6 +122,15 @@ func UpdateComment(ctx *gin.Context) {
 	ctx.JSON(status, helper.ResponseSuccessNoData(status))
 }
 
+// DeleteComment godoc
+// @Summary Delete comment identified by the given Id
+// @Description Delete the comment corresponding to the input Id
+// @Tags comments
+// @Accept json
+// @Produce json
+// @Param id path int true "Id of the comment"
+// @Success 200 {object} entity.Comment
+// @Router /comments/{id} [delete]
 func DeleteComment(ctx *gin.Context) {
 	db := db.GetDB()
 	status := http.StatusOK
